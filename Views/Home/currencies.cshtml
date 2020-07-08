@@ -1,0 +1,54 @@
+﻿@model ValuteASPTest.Models.IndexViewModel
+@using ValuteASPTest.Models;
+
+<div>
+    <h4>Список курсов валют</h4>
+
+    <table class="table">
+        <tr>
+            <td><p>Name</p></td>
+            <td><p>CharCode</p></td>
+            <td><p>Value</p></td>
+            <td><p>Previous</p></td>
+        </tr>
+        @foreach (var item in Model.ValuteResp)
+        {
+        <tr>
+        <td>
+            @item.Value.Name
+        </td>
+        <td>
+            @item.Value.CharCode
+        </td>
+        <td>
+            @item.Value.Value
+        </td>
+        <td>
+            @item.Value.Previous
+        </td>
+        <td>
+            @Html.ActionLink("Details", "currency", new { key = item.Key, page = Model.PageInfo.PageNumber })
+        </td>
+        </tr>
+        }
+    </table>
+    <br />
+    @if (Model.PageInfo.HasPreviousPage)
+    {
+        <a asp-action="currencies"
+           asp-route-page="@(Model.PageInfo.PageNumber - 1)"
+           class="btn btn-outline-dark">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Назад
+        </a>
+    }
+    @if (Model.PageInfo.HasNextPage)
+    {
+        <a asp-action="currencies"
+           asp-route-page="@(Model.PageInfo.PageNumber + 1)"
+           class="btn btn-outline-dark">
+            Вперед
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+</div>
